@@ -4,8 +4,6 @@ import lab01.example.model.SimpleBankAccountWithAtm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Predicate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimpleBankAccountWithAtmTest {
@@ -18,4 +16,5 @@ public class SimpleBankAccountWithAtmTest {
         accountHolder = new AccountHolder("Mario", "Rossi", VALID_USER_ID);
         bankAccount   = new SimpleBankAccountWithAtm(accountHolder, 0);
     }
+
 }
