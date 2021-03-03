@@ -15,4 +15,9 @@ public class SimpleBankAccount extends AbstractBankAccount {
     protected double getFee() {
         return 0;
     }
+
+    @Override
+    protected boolean isWithdrawAllowed(double amount) {
+        return getBalance() >= amount;
+    }
 }

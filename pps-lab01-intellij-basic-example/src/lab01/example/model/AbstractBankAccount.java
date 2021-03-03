@@ -33,14 +33,9 @@ public abstract class AbstractBankAccount implements BankAccount {
         }
     }
 
-    /**
-     * @return the fee to apply on amount
-     */
     protected abstract double getFee();
 
-    private boolean isWithdrawAllowed(final double amount){
-        return balance >= amount;
-    }
+    protected abstract boolean isWithdrawAllowed(final double amount);
 
     private boolean checkAmount(final double amount) {
         return amount > 0;

@@ -42,4 +42,11 @@ public class SimpleBankAccountWithAtmTest {
         bankAccount.withdraw(USER_ID, NULL_AMOUNT);
         assertEquals(0, bankAccount.getBalance());
     }
+
+    @Test
+    void testInvalidWithdraw() {
+        bankAccount.deposit(USER_ID, 2);
+        bankAccount.withdraw(USER_ID, 1);
+        assertEquals(1, bankAccount.getBalance());
+    }
 }
