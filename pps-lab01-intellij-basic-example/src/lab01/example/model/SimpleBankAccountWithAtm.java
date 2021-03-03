@@ -12,7 +12,7 @@ public class SimpleBankAccountWithAtm extends AbstractBankAccount {
     }
 
     @Override
-    protected double applyFee(double amount) {
-        return amount - ATM_FEE;
+    protected double getFee() {
+        return ATM_FEE;
     }
 }

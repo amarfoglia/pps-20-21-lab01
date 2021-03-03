@@ -22,4 +22,11 @@ public class SimpleBankAccountWithAtmTest {
         bankAccount.deposit(VALID_USER_ID, 100);
         assertEquals(99, bankAccount.getBalance());
     }
+
+    @Test
+    void testFeePaymentOnWithdraw() {
+        bankAccount.deposit(VALID_USER_ID, 100);
+        bankAccount.withdraw(VALID_USER_ID, 8);
+        assertEquals(90, bankAccount.getBalance());
+    }
 }
