@@ -36,4 +36,10 @@ public class SimpleBankAccountWithAtmTest {
         bankAccount.deposit(USER_ID, NULL_AMOUNT);
         assertEquals(0, bankAccount.getBalance());
     }
+
+    @Test
+    void testNullAmountOnWithdraw() {
+        bankAccount.withdraw(USER_ID, NULL_AMOUNT);
+        assertEquals(0, bankAccount.getBalance());
+    }
 }
