@@ -10,4 +10,9 @@ public class SimpleBankAccount extends AbstractBankAccount {
     public SimpleBankAccount(final AccountHolder holder, final double balance) {
         super(holder, balance);
     }
+
+    @Override
+    protected double applyFee(final double amount) {
+        return amount;
+    }
 }

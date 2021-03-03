@@ -17,4 +17,9 @@ public class SimpleBankAccountWithAtmTest {
         bankAccount   = new SimpleBankAccountWithAtm(accountHolder, 0);
     }
 
+    @Test
+    void testFeePaymentOnDeposit() {
+        bankAccount.deposit(VALID_USER_ID, 100);
+        assertEquals(99, bankAccount.getBalance());
+    }
 }
