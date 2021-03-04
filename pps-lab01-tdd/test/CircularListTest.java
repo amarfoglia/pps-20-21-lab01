@@ -79,4 +79,18 @@ public class CircularListTest {
         assertEquals(FIRST_ELEMENT, circularList.previous());
     }
 
+    @Test
+    void testBackToLastElement() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        IntStream.range(0, ADDED_ELEMENTS-1).forEach(i -> circularList.next());
+        assertEquals(LAST_ELEMENT, circularList.previous());
+    }
+
+    @Test
+    void testReset() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        circularList.next();
+        circularList.reset();
+        assertEquals(FIRST_ELEMENT, circularList.next());
+    }
 }

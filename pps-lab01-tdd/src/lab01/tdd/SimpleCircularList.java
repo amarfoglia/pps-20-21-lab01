@@ -45,7 +45,7 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public void reset() {
-
+        currentIndex = FIRST_POSITION;
     }
 
     @Override
