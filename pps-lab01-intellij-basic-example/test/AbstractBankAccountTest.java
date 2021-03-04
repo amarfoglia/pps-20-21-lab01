@@ -24,11 +24,11 @@ public abstract class AbstractBankAccountTest {
 
     protected abstract double getFee();
 
-    protected double computeAmountToWithdraw(double amount) {
+    protected double computeAmountToWithdraw(final double amount) {
         return amount + getFee();
     }
 
-    protected double computeAmountToDeposit(double amount) {
+    protected double computeAmountToDeposit(final double amount) {
         return amount - getFee();
     }
 

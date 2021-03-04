@@ -11,12 +11,12 @@ public abstract class AbstractBankAccount implements BankAccount {
 
     @Override
     public AccountHolder getHolder(){
-        return this.holder;
+        return holder;
     }
 
     @Override
     public double getBalance() {
-        return this.balance;
+        return balance;
     }
 
     @Override
