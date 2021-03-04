@@ -5,13 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The test suite for testing the CircularList implementation
  */
 public class CircularListTest {
+    private static final int ADDED_ELEMENTS = 3;
     private CircularList circularList;
 
     @BeforeEach
@@ -28,5 +30,11 @@ public class CircularListTest {
     void testAddition() {
         circularList.add(1);
         assertFalse(circularList.isEmpty());
+    }
+
+    @Test
+    void testSize() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        assertEquals(ADDED_ELEMENTS, circularList.size());
     }
 }
