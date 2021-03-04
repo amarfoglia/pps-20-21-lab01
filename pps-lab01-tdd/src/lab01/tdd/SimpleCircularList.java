@@ -3,6 +3,7 @@ package lab01.tdd;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class SimpleCircularList implements CircularList {
@@ -51,9 +52,9 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
-        final int startIndex = currentIndex;
+        final Predicate<Integer> isBackToBeginning = i -> currentIndex == i;
         return Stream.generate(this::next)
-                .takeWhile(e -> startIndex != currentIndex)
+                .takeWhile(e -> isBackToBeginning.test(currentIndex))
                 .map(Optional::get)
                 .filter(strategy::apply)
                 .findFirst();
