@@ -66,4 +66,17 @@ public class CircularListTest {
         circularList.previous();
         assertEquals(LAST_ELEMENT, circularList.previous());
     }
+
+    @Test
+    void testPreviousOnEmptyList() {
+        assertTrue(circularList.previous().isEmpty());
+    }
+
+    @Test
+    void testPreviousAfterAddition() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        IntStream.range(0, ADDED_ELEMENTS).forEach(i -> circularList.previous());
+        assertEquals(FIRST_ELEMENT, circularList.previous());
+    }
+
 }
