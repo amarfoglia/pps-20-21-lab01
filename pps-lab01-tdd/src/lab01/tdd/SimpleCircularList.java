@@ -38,7 +38,9 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public Optional<Integer> previous() {
-        return Optional.empty();
+        final Optional<Integer> currentElement = getCurrentElement();
+        updateIndexOnPrevious();
+        return currentElement;
     }
 
     @Override
