@@ -1,52 +1,53 @@
-import lab01.example.model.AccountHolder;
 import lab01.example.model.BankAccount;
 import lab01.example.model.SimpleBankAccountWithAtm;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimpleBankAccountWithAtmTest {
-    private static final int USER_ID = 1;
-    private static final double NULL_AMOUNT = 0.0;
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+public class SimpleBankAccountWithAtmTest extends AbstractBankAccountTest{
+    private static final double NULL_AMOUNT = 0;
+    private static final double EXCESS_AMOUNT = 99;
 
-    @BeforeEach
-    void beforeEach(){
-        accountHolder = new AccountHolder("Mario", "Rossi", USER_ID);
-        bankAccount   = new SimpleBankAccountWithAtm(accountHolder, 0);
+    @Override
+    protected BankAccount generateBankAccount() {
+        return new SimpleBankAccountWithAtm(getAccountHolder(), INITIAL_DEPOSIT);
+    }
+
+    @Override
+    protected double getFee() {
+        return SimpleBankAccountWithAtm.ATM_FEE;
     }
 
     @Test
     void testFeePaymentOnDeposit() {
-        bankAccount.deposit(USER_ID, 100);
-        assertEquals(99, bankAccount.getBalance());
+        getBankAccount().deposit(USER_ID, AMOUNT_TO_DEPOSIT);
+        assertEquals(computeAmountToDeposit(AMOUNT_TO_DEPOSIT), getBankAccount().getBalance());
     }
 
     @Test
     void testFeePaymentOnWithdraw() {
-        bankAccount.deposit(USER_ID, 100);
-        bankAccount.withdraw(USER_ID, 8);
-        assertEquals(90, bankAccount.getBalance());
+        getBankAccount().deposit(USER_ID, AMOUNT_TO_DEPOSIT);
+        getBankAccount().withdraw(USER_ID, AMOUNT_TO_WITHDRAW);
+        final double expectedBalance = computeAmountToDeposit(AMOUNT_TO_DEPOSIT) - computeAmountToWithdraw(AMOUNT_TO_WITHDRAW);
+        assertEquals(expectedBalance, getBankAccount().getBalance());
     }
 
     @Test
     void testNullAmountOnDeposit() {
-        bankAccount.deposit(USER_ID, NULL_AMOUNT);
-        assertEquals(0, bankAccount.getBalance());
+        getBankAccount().deposit(USER_ID, NULL_AMOUNT);
+        assertEquals(INITIAL_DEPOSIT, getBankAccount().getBalance());
     }
 
     @Test
     void testNullAmountOnWithdraw() {
-        bankAccount.withdraw(USER_ID, NULL_AMOUNT);
-        assertEquals(0, bankAccount.getBalance());
+        getBankAccount().withdraw(USER_ID, NULL_AMOUNT);
+        assertEquals(INITIAL_DEPOSIT, getBankAccount().getBalance());
     }
 
     @Test
-    void testInvalidWithdraw() {
-        bankAccount.deposit(USER_ID, 2);
-        bankAccount.withdraw(USER_ID, 1);
-        assertEquals(1, bankAccount.getBalance());
+    void testExcessWithdraw() {
+        getBankAccount().deposit(USER_ID, AMOUNT_TO_DEPOSIT);
+        getBankAccount().withdraw(USER_ID, EXCESS_AMOUNT);
+        assertEquals(computeAmountToDeposit(AMOUNT_TO_DEPOSIT), getBankAccount().getBalance());
     }
 }
