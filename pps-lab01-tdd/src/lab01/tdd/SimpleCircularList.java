@@ -3,6 +3,7 @@ package lab01.tdd;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class SimpleCircularList implements CircularList {
     private static final int FIRST_POSITION = 0;
@@ -50,7 +51,12 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
-        return Optional.empty();
+        final int startIndex = currentIndex;
+        return Stream.generate(this::next)
+                .takeWhile(e -> startIndex != currentIndex)
+                .map(Optional::get)
+                .filter(strategy::apply)
+                .findFirst();
     }
 
     private Optional<Integer> getCurrentElement() {

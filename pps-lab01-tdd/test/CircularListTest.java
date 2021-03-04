@@ -1,11 +1,10 @@
 import lab01.tdd.CircularList;
+import lab01.tdd.SelectStrategy;
 import lab01.tdd.SimpleCircularList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the CircularList implementation
  */
 public class CircularListTest {
-    private static final int ADDED_ELEMENTS = 3;
-    private static final Optional<Integer> LAST_ELEMENT = Optional.of(ADDED_ELEMENTS-1);
-    private static final Optional<Integer> FIRST_ELEMENT = Optional.of(0);
+    private static final int ADDED_ELEMENTS = 4;
+    private static final int EVEN_ELEMENT   = 2;
+    private static final int FIRST_ELEMENT  = 0;
+    private static final int LAST_ELEMENT   = ADDED_ELEMENTS-1;
     private CircularList circularList;
 
     @BeforeEach
@@ -50,21 +50,21 @@ public class CircularListTest {
     void testNextAfterAddition() {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         IntStream.range(0, ADDED_ELEMENTS-1).forEach(i -> circularList.next());
-        assertEquals(LAST_ELEMENT, circularList.next());
+        circularList.next().ifPresentOrElse(e -> assertEquals(LAST_ELEMENT, e), Assertions::fail);
     }
 
     @Test
     void testCircularityOnLastElement() {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         IntStream.range(0, ADDED_ELEMENTS).forEach(i -> circularList.next());
-        assertEquals(FIRST_ELEMENT, circularList.next());
+        circularList.next().ifPresentOrElse(e -> assertEquals(FIRST_ELEMENT, e), Assertions::fail);
     }
 
     @Test
     void testCircularityOnFirstElement() {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         circularList.previous();
-        assertEquals(LAST_ELEMENT, circularList.previous());
+        circularList.previous().ifPresentOrElse(e -> assertEquals(LAST_ELEMENT, e), Assertions::fail);
     }
 
     @Test
@@ -76,14 +76,14 @@ public class CircularListTest {
     void testPreviousAfterAddition() {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         IntStream.range(0, ADDED_ELEMENTS).forEach(i -> circularList.previous());
-        assertEquals(FIRST_ELEMENT, circularList.previous());
+        circularList.previous().ifPresentOrElse(e -> assertEquals(FIRST_ELEMENT, e), Assertions::fail);
     }
 
     @Test
     void testBackToLastElement() {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         IntStream.range(0, ADDED_ELEMENTS-1).forEach(i -> circularList.next());
-        assertEquals(LAST_ELEMENT, circularList.previous());
+        circularList.previous().ifPresentOrElse(e -> assertEquals(LAST_ELEMENT, e), Assertions::fail);
     }
 
     @Test
@@ -91,6 +91,15 @@ public class CircularListTest {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         circularList.next();
         circularList.reset();
-        assertEquals(FIRST_ELEMENT, circularList.next());
+        circularList.next().ifPresentOrElse(e -> assertEquals(FIRST_ELEMENT, e), Assertions::fail);
+    }
+
+    private final SelectStrategy evenStrategy = element -> element % 2 == 0;
+
+    @Test
+    void testEvenStrategy() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        circularList.next();
+        circularList.next(evenStrategy).ifPresentOrElse(e -> assertEquals(EVEN_ELEMENT, e), Assertions::fail);
     }
 }
