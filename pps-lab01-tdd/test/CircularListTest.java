@@ -50,4 +50,11 @@ public class CircularListTest {
         IntStream.range(0, ADDED_ELEMENTS-1).forEach(i -> circularList.next());
         assertEquals(Optional.of(ADDED_ELEMENTS-1), circularList.next());
     }
+
+    @Test
+    void testCircularityOnLastElement() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        IntStream.range(0, ADDED_ELEMENTS).forEach(i -> circularList.next());
+        assertEquals(Optional.of(0), circularList.next());
+    }
 }
