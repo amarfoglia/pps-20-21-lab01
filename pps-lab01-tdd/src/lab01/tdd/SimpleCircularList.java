@@ -31,7 +31,9 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        return Optional.empty();
+        final Optional<Integer> currentElement = getCurrentElement();
+        updateIndexOnNext();
+        return currentElement;
     }
 
     @Override
@@ -47,5 +49,17 @@ public class SimpleCircularList implements CircularList {
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
         return Optional.empty();
+    }
+
+    private Optional<Integer> getCurrentElement() {
+        return isEmpty() ? Optional.empty() : Optional.of(list.get(currentIndex));
+    }
+
+    private void updateIndexOnNext() {
+        currentIndex = (currentIndex == list.size()-1) ? FIRST_POSITION : currentIndex+1;
+    }
+
+    private void updateIndexOnPrevious() {
+        currentIndex = (currentIndex == FIRST_POSITION) ? list.size()-1 : currentIndex-1;
     }
 }
