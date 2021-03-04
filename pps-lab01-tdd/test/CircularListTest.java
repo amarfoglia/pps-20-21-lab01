@@ -102,4 +102,14 @@ public class CircularListTest {
         circularList.next();
         circularList.next(evenStrategy).ifPresentOrElse(e -> assertEquals(EVEN_ELEMENT, e), Assertions::fail);
     }
+
+    private final int MULTIPLE_TO_FIND = 2;
+    private final SelectStrategy multipleOfStrategy = element -> element % MULTIPLE_TO_FIND == 0;
+
+    @Test
+    void testMultipleOfStrategy() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        circularList.next(); // go over zero element
+        circularList.next(multipleOfStrategy).ifPresentOrElse(e -> assertEquals(EVEN_ELEMENT, e), Assertions::fail);
+    }
 }
