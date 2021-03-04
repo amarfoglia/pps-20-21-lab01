@@ -1,8 +1,19 @@
 package lab01.tdd;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class SimpleCircularList implements CircularList {
+    private static final int FIRST_POSITION = 0;
+    private final List<Integer> list;
+    private int currentIndex;
+
+    public SimpleCircularList() {
+        list = new ArrayList<>();
+        currentIndex = FIRST_POSITION;
+    }
+
     @Override
     public void add(int element) {
 
@@ -15,7 +26,7 @@ public class SimpleCircularList implements CircularList {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return list.isEmpty();
     }
 
     @Override
