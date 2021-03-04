@@ -16,6 +16,7 @@ public class CircularListTest {
     private static final int FIRST_ELEMENT   = 0;
     private static final int LAST_ELEMENT    = ADDED_ELEMENTS-1;
     private static final int DIVIDER_ELEMENT = 2;
+    private static final int INVALID_ELEMENT = 999;
     private CircularList circularList;
     private StrategyFactory strategyFactory;
 
@@ -116,5 +117,11 @@ public class CircularListTest {
         IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
         circularList.next(strategyFactory.createEqualsStrategy(EVEN_ELEMENT))
                 .ifPresentOrElse(e -> assertEquals(EVEN_ELEMENT, e), Assertions::fail);
+    }
+
+    @Test
+    void testEmptyResultOnStrategy() {
+        IntStream.range(0, ADDED_ELEMENTS).forEach(circularList::add);
+        assertTrue(circularList.next(strategyFactory.createEqualsStrategy(INVALID_ELEMENT)).isEmpty());
     }
 }
